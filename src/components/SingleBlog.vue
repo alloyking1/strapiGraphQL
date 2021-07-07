@@ -1,24 +1,25 @@
 <template>
   <div>
-    <h1>This is a single blog post</h1>
-    <p>
-      {{ blog }}
-    </p>
+    <div class="container customPadding">
+      <div class="customPadding">
+        <div class="card card shadow-lg p-3 mb-5 bg-white rounded mr-5 ml-5">
+          <div class="container">
+            <div class="card-head" style="padding: 4rem">
+              <h1 style="font-size: 6rem">{{ blog.Title }}</h1>
+            </div>
+            <hr />
+            <p style="line-height: 26pt">
+              {{ blog.Body }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import gql from "graphql-tag";
-
-// const PropertyQuery = gql`
-//   query Property($id: ID!) {
-//     Property(id: $id) {
-//       id
-//       slug
-//       title
-//     }
-//   }
-// `
 
 export default {
   name: "SingleBlog",
@@ -42,10 +43,19 @@ export default {
       `,
       variables() {
         return {
-          id: this.id, // Error here!
+          id: this.id,
         };
       },
     },
   },
 };
 </script>
+
+
+<style>
+.customPadding {
+  margin-top: 12rem !important;
+  margin-bottom: 12rem !important;
+  /* padding: 4rem; */
+}
+</style>
