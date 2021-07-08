@@ -6,6 +6,15 @@
           <div class="container">
             <div class="card-head" style="padding: 4rem">
               <h1 style="font-size: 6rem">{{ blog.Title }}</h1>
+              <button type="button" class="btn btn-primary mr-2">Edit</button>
+
+              <button
+                type="button"
+                class="btn btn-danger"
+                @click="deletePost()"
+              >
+                Delete
+              </button>
             </div>
             <hr />
             <p style="line-height: 26pt">
@@ -28,6 +37,40 @@ export default {
       blog: [],
       id: this.$route.params.id,
     };
+  },
+
+  methods: {
+    deletePost() {
+      const check = confirm();
+      if (check) {
+        this.$apollo
+          .mutate({
+            mutation: gql`
+              mutation deleteBlog($id: ID!) {
+                deleteBlog(input: { where: { id: $id } }) {
+                  blog {
+                    Title
+                    Body
+                  }
+                }
+              }
+            `,
+            variables: {
+              id: this.id,
+            },
+            // variables() {
+            //   return {
+            //     id: this.id,
+            //   };
+            // },
+          })
+          .then((res) => {
+            console.log(res);
+          });
+      } else {
+        return false;
+      }
+    },
   },
 
   apollo: {
