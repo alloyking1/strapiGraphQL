@@ -11,7 +11,8 @@
                 type="button"
                 class="btn btn-primary mr-2"
                 data-toggle="modal"
-                data-target=".bd-example-modal-lg"
+                data-target="#exampleModal"
+                data-whatever="@mdo"
               >
                 Edit
               </button>
@@ -30,43 +31,48 @@
             </p>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Large modal -->
-
-        <div
-          class="modal fade bd-example-modal-lg"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="myLargeModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-lg">
-            <div class="container">
-              <div class="modal-content" style="margin: 3rem">
-                <!-- form -->
-
-                <form>
-                  <div class="form-group">
-                    <label for="exampleFormControlInput1">Title</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter title"
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Blog post</label>
-                    <textarea
-                      class="form-control"
-                      id="exampleFormControlTextarea1"
-                      rows="3"
-                    ></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label"
+                  >Title:</label
+                >
+                <input type="text" v-model="blog.Title" class="form-control" />
               </div>
-            </div>
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">Body:</label>
+                <textarea class="form-control" v-model="blog.Body"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" @click="editPot()">
+              Save
+            </button>
           </div>
         </div>
       </div>
@@ -87,6 +93,36 @@ export default {
   },
 
   methods: {
+    editPot() {
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation updateBlog($id: ID!, $Title: String!, $Body: String!) {
+              updateBlog(
+                input: {
+                  where: { id: $id }
+                  data: { Title: $Title, Body: $Body }
+                }
+              ) {
+                blog {
+                  Title
+                  Body
+                }
+              }
+            }
+          `,
+          variables: {
+            id: this.id,
+            Title: this.blog.Title,
+            Body: this.blog.Body,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          alert("Edited");
+        });
+    },
+
     deletePost() {
       const check = confirm();
       if (check) {
