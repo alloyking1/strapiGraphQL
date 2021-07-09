@@ -6,7 +6,15 @@
           <div class="container">
             <div class="card-head" style="padding: 4rem">
               <h1 style="font-size: 6rem">{{ blog.Title }}</h1>
-              <button type="button" class="btn btn-primary mr-2">Edit</button>
+
+              <button
+                type="button"
+                class="btn btn-primary mr-2"
+                data-toggle="modal"
+                data-target=".bd-example-modal-lg"
+              >
+                Edit
+              </button>
 
               <button
                 type="button"
@@ -20,6 +28,45 @@
             <p style="line-height: 26pt">
               {{ blog.Body }}
             </p>
+          </div>
+        </div>
+
+        <!-- Large modal -->
+
+        <div
+          class="modal fade bd-example-modal-lg"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="myLargeModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-lg">
+            <div class="container">
+              <div class="modal-content" style="margin: 3rem">
+                <!-- form -->
+
+                <form>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Title</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter title"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Blog post</label>
+                    <textarea
+                      class="form-control"
+                      id="exampleFormControlTextarea1"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -58,11 +105,6 @@ export default {
             variables: {
               id: this.id,
             },
-            // variables() {
-            //   return {
-            //     id: this.id,
-            //   };
-            // },
           })
           .then((res) => {
             console.log(res);
