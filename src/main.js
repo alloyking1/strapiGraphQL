@@ -14,6 +14,7 @@ const router = new VueRouter({
   routes : [
 
     { path: '/', component: require('./components/Home.vue').default },
+    { path: '/create', component: require('./components/CreatePost.vue').default },
     { path: '/blog/:id', component: require('./components/SingleBlog.vue').default},
   ],
 })
