@@ -92,7 +92,7 @@ export default {
             },
           })
           .then((res) => {
-            console.log(res.data.jwt);
+            console.log(res);
             alert("User created Created");
           });
       } else {
