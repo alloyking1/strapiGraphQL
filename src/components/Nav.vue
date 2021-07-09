@@ -21,7 +21,9 @@
             >
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="#">Link</router-link>
+            <router-link class="nav-link" to="/user/signup"
+              >sign up</router-link
+            >
           </li>
         </ul>
       </div>
